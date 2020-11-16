@@ -55,6 +55,7 @@ class App extends Component {
       }).catch (() => {
         console.log("error");
       })
+      TODO://Bug on response
     console.log('click');
   }
   render(){
