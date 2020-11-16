@@ -5,7 +5,7 @@ const Rank =()=>{
 
         <div>
 
-            <div className='white f3'>
+            <div className='white f3' style={{marginTop:4}}>
                 {'Hey User your current Rank is..'}
             </div>
             <div className='white f1'>
