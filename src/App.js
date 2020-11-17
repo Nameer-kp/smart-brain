@@ -7,6 +7,7 @@ import Rank from './components/Rank/Rank';
 import Particles from 'react-particles-js';
 import './App.css';
 import Clarifai from 'clarifai';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 
 const app = new Clarifai.App({
   apiKey:'588fbe9a305a4bc1881b25df1f0052b2'
@@ -38,26 +39,41 @@ class App extends Component {
     super();
     this.state={
       input:'',
+      imageUrl:'',
     }
   }
   onInputChange=(event)=>{
-    console.log(event.target.value);
+    
+    this.setState({input:event.target.value});
+    console.log(this.state.input);
+
   }
 
   onButtonSubmit =()=>{
-    app.models.initModel({id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"})
-      .then(generalModel => {
-        return generalModel.predict("@@sampleTrain");
-      })
-      .then(response => {
-        var concepts = response['outputs'][0]['data']['concepts']
-        console.log(console)
-      }).catch (() => {
-        console.log("error");
-      })
-      TODO://Bug on response
+
+    // for passing image url to to faceRecognition component
+    
+    this.setState({imageUrl:this.state.input},this.callToApi);
+    console.log("1onButtonSubmit",this.state.imageUrl);
+
+
+
+    
+      
     console.log('click');
   }
+
+  callToApi=()=>{
+    app.models.predict(Clarifai.FACE_DETECT_MODEL,this.state.imageUrl)
+  .then(response => {
+    console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
+    // There was a successful response
+  })
+  .catch(error => {
+    console.log(error);
+  })
+  }
+
   render(){
     return (
     <div className="App">
@@ -67,9 +83,8 @@ class App extends Component {
       <Navigation/>
       <Logo/>
       <Rank/>
-      <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-      {/*  
-      <FaceRecognition/>*/}
+      <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
+      <FaceRecognition imageUrl={this.state.imageUrl}/>
 
       
     </div>
