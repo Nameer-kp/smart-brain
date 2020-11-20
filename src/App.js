@@ -41,7 +41,8 @@ class App extends Component {
     this.state={
       input:'',
       imageUrl:'',
-      box:{}
+      box:{},
+      route:'signin'
     }
   }
 
@@ -90,6 +91,15 @@ class App extends Component {
     console.log('click');
   }
 
+  //this function is used for changing to home page
+
+  onRouteChange =()=>{
+
+    this.setState({route:'home'});
+
+
+  }
+
   callToApi=()=>{
     app.models.predict(Clarifai.FACE_DETECT_MODEL,this.state.imageUrl)
   .then(response => {
@@ -106,15 +116,18 @@ class App extends Component {
     return (
     <div className="App">
 
-<Particles params={particlesOptions} className='particles'/>
+      <Particles params={particlesOptions} className='particles'/>
 
       <Navigation/>
-      <SignIn/>
-      <Logo/>
-      <Rank/>
-      <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
-      <FaceRecognition box ={this.state.box} imageUrl={this.state.imageUrl}/>
-
+      
+      {this.state.route==='signin'?<SignIn onRouteChange={this.onRouteChange}/>:
+        <div>
+          <Logo/>
+          <Rank/>
+          <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
+          <FaceRecognition box ={this.state.box} imageUrl={this.state.imageUrl}/>
+        </div>
+      }
       
     </div>
   );
