@@ -93,9 +93,9 @@ class App extends Component {
 
   //this function is used for changing to home page
 
-  onRouteChange =()=>{
+  onRouteChange =(route)=>{
 
-    this.setState({route:'home'});
+    this.setState({route:route});
 
 
   }
@@ -118,7 +118,7 @@ class App extends Component {
 
       <Particles params={particlesOptions} className='particles'/>
 
-      <Navigation/>
+      <Navigation onRouteChange={this.onRouteChange}/>
       
       {this.state.route==='signin'?<SignIn onRouteChange={this.onRouteChange}/>:
         <div>
