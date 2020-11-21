@@ -7,6 +7,7 @@ import Rank from './components/Rank/Rank';
 import Particles from 'react-particles-js';
 import './App.css';
 import SignIn from './components/SignIn/SignIn'
+import Register from './components/Register/Register'
 import Clarifai from 'clarifai';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 
@@ -42,7 +43,8 @@ class App extends Component {
       input:'',
       imageUrl:'',
       box:{},
-      route:'signin'
+      route:'signin',
+      isSignedIn:false
     }
   }
 
@@ -95,6 +97,12 @@ class App extends Component {
 
   onRouteChange =(route)=>{
 
+    if(route==='home'){
+      this.setState({isSignedIn:true})
+    }else if (route==='signout'){
+      this.setState({isSignedIn:false})
+    }
+
     this.setState({route:route});
 
 
@@ -117,16 +125,20 @@ class App extends Component {
     <div className="App">
 
       <Particles params={particlesOptions} className='particles'/>
-
-      <Navigation onRouteChange={this.onRouteChange}/>
+      {/* we pass isSignIn to Navigation to show it accordingly */}
+      <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
       
-      {this.state.route==='signin'?<SignIn onRouteChange={this.onRouteChange}/>:
-        <div>
-          <Logo/>
-          <Rank/>
-          <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
-          <FaceRecognition box ={this.state.box} imageUrl={this.state.imageUrl}/>
-        </div>
+      {this.state.route==='home'?
+      <div>
+        <Logo/>
+        <Rank/>
+        <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
+        <FaceRecognition box ={this.state.box} imageUrl={this.state.imageUrl}/>
+      </div>
+      :(this.state.route==='signin'?
+        <SignIn onRouteChange={this.onRouteChange}/>
+        :<Register onRouteChange={this.onRouteChange}/>)
+        
       }
       
     </div>
