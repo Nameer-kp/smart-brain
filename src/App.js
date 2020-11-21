@@ -121,21 +121,22 @@ class App extends Component {
   }
 
   render(){
+    const { route,isSignedIn,imageUrl,box } = this.state;
     return (
     <div className="App">
 
       <Particles params={particlesOptions} className='particles'/>
       {/* we pass isSignIn to Navigation to show it accordingly */}
-      <Navigation isSignedIn={this.state.isSignedIn} onRouteChange={this.onRouteChange}/>
+      <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
       
-      {this.state.route==='home'?
+      {route==='home'?
       <div>
         <Logo/>
         <Rank/>
         <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
-        <FaceRecognition box ={this.state.box} imageUrl={this.state.imageUrl}/>
+        <FaceRecognition box ={box} imageUrl={imageUrl}/>
       </div>
-      :(this.state.route==='signin'?
+      :(route==='signin'?
         <SignIn onRouteChange={this.onRouteChange}/>
         :<Register onRouteChange={this.onRouteChange}/>)
         
