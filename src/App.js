@@ -144,16 +144,7 @@ class App extends Component {
             })
     }).then(response=>response.json()).then(user=>{
       
-      this.setState({user:
-        {
-          id:user.id,
-          name:user["name"],
-          email:user.email,
-          entries:user.entries,
-          joined : user.joined
-          }
-
-      })
+      this.setState(Object.assign(this.state.user,{entries:user.entries}))
     })
   }
 
