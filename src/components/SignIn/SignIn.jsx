@@ -17,7 +17,7 @@ class SignIn extends React.Component {
 
     onSubmitSignIn=()=>{
         
-        fetch('http://localhost:3001/signin',{
+        fetch('https://smart-brain-nameer.herokuapp.com/signin',{
             method:'post',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
@@ -26,10 +26,13 @@ class SignIn extends React.Component {
             })
         }).then(response=>response.json())
         .then(user=>{
-            if(user){
+            if(user.id){
+                console.log("gettingit",user);
                 this.props.loadUser(user);
                 this.props.onRouteChange('home');
             }
+        }).catch(err=>{
+            console.log('error sigin in')
         })
         console.log("from on submitsignin",this.state);
     }

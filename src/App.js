@@ -8,12 +8,7 @@ import Particles from 'react-particles-js';
 import './App.css';
 import SignIn from './components/SignIn/SignIn'
 import Register from './components/Register/Register'
-import Clarifai from 'clarifai';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
-
-const app = new Clarifai.App({
-  apiKey:'588fbe9a305a4bc1881b25df1f0052b2'
-})
 
 
 const particlesOptions = {
@@ -35,24 +30,26 @@ const particlesOptions = {
   }
 }
 
+const initialState={
+    input:'',
+    imageUrl:'',
+    box:{},
+    route:'signin',
+    isSignedIn:false,
+    user:{
+          id:'',
+          name:'',
+          email:'',
+          entries:0,
+          joined : ''
+    }
+}
+
 class App extends Component {
 
   constructor(){
     super();
-    this.state={
-      input:'',
-      imageUrl:'',
-      box:{},
-      route:'signin',
-      isSignedIn:false,
-      user:{
-            id:'',
-            name:'',
-            email:'',
-            entries:0,
-            joined : ''
-      }
-    }
+    this.state=initialState;
   }
 
   componentDidMount(){
@@ -123,7 +120,7 @@ class App extends Component {
     if(route==='home'){
       this.setState({isSignedIn:true})
     }else if (route==='signout'){
-      this.setState({isSignedIn:false})
+      this.setState(initialState)
     }
 
     this.setState({route:route});
@@ -132,21 +129,28 @@ class App extends Component {
   }
 
   callToApi=()=>{
-    app.models.predict(Clarifai.FACE_DETECT_MODEL,this.state.imageUrl)
+    fetch('https://smart-brain-nameer.herokuapp.com/apiCall',{
+          method:'put',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({
+            imageUrl:this.state.input
+            })
+          }).then(response=>response.json())
     .then(response => {
     // updating entries via put on /image
     if(response){
-        fetch('http://localhost:3001/image',{
+        fetch('https://smart-brain-nameer.herokuapp.com/image',{
           method:'put',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({
             id:this.state.user.id
             })
-    }).then(response=>response.json()).then(user=>{
+    }).then(response=>response.json()).then(entries=>{
       
-      this.setState(Object.assign(this.state.user,{entries:user.entries}))
+      this.setState(Object.assign(this.state.user,{entries:parseInt(entries)}))
     })
   }
+
 
     //here the processed response is passed to displayFaceBox
     this.displayFaceBox(this.calculateFaceLocation(response));
