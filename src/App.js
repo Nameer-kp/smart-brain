@@ -53,7 +53,7 @@ class App extends Component {
   }
 
   componentDidMount(){
-      fetch('http://localhost:3001').then(response=>response.json()).then(console.log);
+      fetch('node:3001').then(response=>response.json()).then(console.log);
   }
 
   calculateFaceLocation = (data) => {
@@ -129,7 +129,7 @@ class App extends Component {
   }
 
   callToApi=()=>{
-    fetch('https://smart-brain-nameer.herokuapp.com/apiCall',{
+    fetch('node:3001/apiCall',{
           method:'put',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({
@@ -139,7 +139,7 @@ class App extends Component {
     .then(response => {
     // updating entries via put on /image
     if(response){
-        fetch('https://smart-brain-nameer.herokuapp.com/image',{
+        fetch('node:3001/image',{
           method:'put',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({
