@@ -9,6 +9,7 @@ import './App.css';
 import SignIn from './components/SignIn/SignIn'
 import Register from './components/Register/Register'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
+import ScoreBoard from './components/ScoreBoard/ScoreBoard'
 
 
 const particlesOptions = {
@@ -52,9 +53,7 @@ class App extends Component {
     this.state=initialState;
   }
 
-  componentDidMount(){
-      fetch('http://localhost:3001').then(response=>response.json()).then(console.log);
-  }
+
 
   calculateFaceLocation = (data) => {
 
@@ -129,7 +128,7 @@ class App extends Component {
   }
 
   callToApi=()=>{
-    fetch('https://smart-brain-nameer.herokuapp.com/apiCall',{
+    fetch('http://localhost:3001/apiCall',{
           method:'put',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({
@@ -139,7 +138,7 @@ class App extends Component {
     .then(response => {
     // updating entries via put on /image
     if(response){
-        fetch('https://smart-brain-nameer.herokuapp.com/image',{
+        fetch('http://localhost:3001/image',{
           method:'put',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({
@@ -178,6 +177,7 @@ class App extends Component {
         <Rank name ={this.state.user.name} entries={this.state.user.entries}/>
         <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
         <FaceRecognition box ={box} imageUrl={imageUrl}/>
+        <ScoreBoard/>
       </div>
       :(route==='signin'?
         <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
