@@ -1,4 +1,5 @@
 import React from 'react';
+import  './ScoreBoard.css';
 
 class ScoreBoard extends React.Component{
     
@@ -21,11 +22,29 @@ class ScoreBoard extends React.Component{
         })
         
     }
+    renderTableData() {
+        return this.state.scoreboard.map((user, index) => {
+           const { name,entries } = user //destructuring
+           return (
+              <tr key={index+1}>
+                 <td>{index+1}</td>
+                 <td>{name}</td>
+                 <td>{entries}</td>
+              </tr>
+           )
+        })
+     }
 
     render(){
         return (
-        <div>
+        <div >
+            <h1>Score Board</h1>
+            <table id='table'>
+                <tbody>
+                    {this.renderTableData()}
+                </tbody>
 
+            </table>
         </div>
         )
     }
