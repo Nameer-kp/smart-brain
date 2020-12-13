@@ -177,7 +177,7 @@ class App extends Component {
         <Rank name ={this.state.user.name} entries={this.state.user.entries}/>
         <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
         <FaceRecognition box ={box} imageUrl={imageUrl}/>
-        <ScoreBoard/>
+        <ScoreBoard name={this.state.user.name}/>
       </div>
       :(route==='signin'?
         <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
