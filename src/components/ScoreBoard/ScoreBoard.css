@@ -1,15 +1,20 @@
 #table {
+  display: inline;
+  align-content: center;
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 0.9em;
   min-width: 400px;
-  border-radius: 5px 5px 0 0;
+  border-radius: 10px 10px 0 0;
+  border: thin;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  color: white;
+  z-index: -1;
 }
 
 #table thead tr {
-  background-color: #009879;
+  background-color: #8430e4;
   color: #ffffff;
   text-align: left;
   font-weight: bold;
@@ -25,14 +30,14 @@
 }
 
 #table tbody tr:nth-of-type(even) {
-  background-color: #f3f3f3;
+  background-color: #0e0d0d;
 }
 
 #table tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid #101111;
 }
 
-#table tbody tr.active-row {
+#table tbody tr.active {
   font-weight: bold;
-  color: #009879;
+  color: #8430e4;
 }

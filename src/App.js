@@ -101,9 +101,11 @@ class App extends Component {
   onButtonSubmit =()=>{
 
     // for passing image url to to faceRecognition component
-    
-    this.setState({imageUrl:this.state.input},this.callToApi);
+    if(this.state.input.length){
+      this.setState({imageUrl:this.state.input},this.callToApi);
     console.log("1onButtonSubmit",this.state.imageUrl);
+    }
+    
 
 
 

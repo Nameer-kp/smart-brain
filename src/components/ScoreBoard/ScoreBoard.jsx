@@ -3,10 +3,10 @@ import  './ScoreBoard.css';
 
 class ScoreBoard extends React.Component{
     
-    constructor({name}){ //through here we get the current loged in user data
-        super(name);
+    constructor(props){ //through here we get the current loged in user data
+        super(props);
         this.state={
-            scoreboard:[]
+            scoreboard:[],
         }
     }
 
@@ -22,24 +22,15 @@ class ScoreBoard extends React.Component{
         })
         
     }
-    checkTop10 =(user)=>{
-        if (user.name===name){
-            return true
-        }
-    }
     renderTableData() {
-        if(this.state.scoreboard.find((user)=>{ ///this code checks for the current user in the top 10 list ..if yep it flags the istop10 to true
-            if (user.name===name){
-                return true
-            }
-        }
-            ))
-            {
-            isTop10=true
-        }
-
+        let isTop10;
+     
         return this.state.scoreboard.map((user, index) => {
            const { name,entries } = user //destructuring
+           if(name===this.props.name){          //this code check whether the current user is in top10 or not
+               isTop10=true;
+           }
+           else isTop10=false;
            return (
               <tr key={index+1} className= {isTop10?"active":null}>
                  <td>{index+1}</td>
