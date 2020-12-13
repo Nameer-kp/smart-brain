@@ -43,8 +43,11 @@ class ScoreBoard extends React.Component{
 
     render(){
         return (
-        <div >
-            <h1>Score Board</h1>
+
+            <div>
+                <h1>Score Board</h1>
+            
+            <div className="tcontainer">
             <table id='table'>
                 <thead>
                     <tr>
@@ -59,6 +62,7 @@ class ScoreBoard extends React.Component{
                 </tbody>
 
             </table>
+        </div>
         </div>
         )
     }

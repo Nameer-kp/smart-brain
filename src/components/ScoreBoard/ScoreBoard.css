@@ -1,16 +1,17 @@
+.tcontainer{
+  display: flex;
+  justify-content: center;
+}
 #table {
-  display: inline;
-  align-content: center;
   border-collapse: collapse;
   margin: 25px 0;
   font-size: 0.9em;
-  min-width: 400px;
+  min-width: 300px;
   border-radius: 10px 10px 0 0;
   border: thin;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   color: white;
-  z-index: -1;
 }
 
 #table thead tr {

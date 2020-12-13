@@ -1,3 +1,7 @@
+
+.image-parent{
+    position: relative;
+}
 .bounding-box{
     position: absolute;
     box-shadow: 0 0 0 3px blue inset;
