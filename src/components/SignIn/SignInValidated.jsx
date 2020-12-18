@@ -33,6 +33,16 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
             }
             
           }
+          validate={values => {
+            let errors = {};
+            if (!values.email) {
+              errors.email = "Required";
+            }
+            if (!values.password) {
+                errors.password = "Required";
+              }
+            return errors;
+          }}
         >
           {props => {
             const {
@@ -58,14 +68,23 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
                                 <input 
                                     value={values.email}
                                   onChange={handleChange}
-                                  className="pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100" type="email" name="email"  id="email"/>
+                                  className={`pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100 ${errors.email && touched.email} error`} type="email" name="email"  id="email"/>
+                                  {errors.email && touched.email && (
+                                    <div className="input-feedback">{errors.email}</div>
+                                    )}
                             </div>
                             <div className="mv3">
                                 <label className="db fw6 lh-copy f6 " htmlFor="password">Password</label>
                                 <input 
                                     value={values.password}
                                   onChange={handleChange}
-                                  className="b pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  id="password"/>
+                                  className={`b pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100 ${errors.password && touched.password} error`}
+                                  type="password" name="password"  id="password"
+                                  
+                            />
+                                {errors.password && touched.password && (
+                                    <div className="input-feedback">{errors.password}</div>
+                                    )}
                             </div>
                         </fieldset>
                         <div className="">
@@ -82,6 +101,7 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
                 </form>
             );
           }}
+          
         </Formik>
       );
 
