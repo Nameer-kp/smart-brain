@@ -31,6 +31,10 @@ class SignIn extends React.Component {
                 this.props.loadUser(user);
                 this.props.onRouteChange('home');
             }
+            else {
+                <p>Your login credentials could not be verified, please try again.</p>
+                console.log("wrong crendintials");
+            }
         }).catch(err=>{
             console.log('error sigin in')
         })

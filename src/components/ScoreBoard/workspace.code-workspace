@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../web-dev"
+		},
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../smart-brain-api"
+		},
+		{
+			"path": "../../../../../Documents/advent-of-code"
+		}
+	],
+	"settings": {
+		"git.ignoreLimitWarning": true
+	}
+}
