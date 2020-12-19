@@ -7,7 +7,7 @@ import Rank from './components/Rank/Rank';
 import Particles from 'react-particles-js';
 import './App.css';
 import SignInValidated from './components/SignIn/SignInValidated'
-import Register from './components/Register/Register'
+import Register from './components/Register/RegisterValidated'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'
 

@@ -6,7 +6,8 @@ class Register extends React.Component{
         this.state={
             email:'',
             password:'',
-            name:''
+            name:'',
+            isTaken:false
         }
         
     }
@@ -35,6 +36,11 @@ class Register extends React.Component{
                 this.props.loadUser(user)
                 this.props.onRouteChange('home');
             }
+            else {
+                console.log("already taken");
+                this.setState({...this.state,isTaken:true})
+                console.log("from register component",this.state);
+            }
         })
         console.log(this.state);
     }
@@ -42,6 +48,7 @@ class Register extends React.Component{
     return(
         <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
             <main className="pa4 black-80">
+            {this.state.isTaken?<div style={{display:"inline",alignItems:"center"}}>Email already Taken</div>:false}
                 <div className="measure">
                     <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                         <legend className="f1 fw6 ph0 mh0">Register</legend>
