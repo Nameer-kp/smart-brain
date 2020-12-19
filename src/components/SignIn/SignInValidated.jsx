@@ -35,8 +35,16 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
           }
           validate={values => {
             let errors = {};
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
             if (!values.email) {
-              errors.email = "Required";
+              errors.email = "Cannot be blank";
+            } else if (!regex.test(values.email)) {
+              errors.email = "Invalid email format";
+            }
+            if (!values.password) {
+              errors.password = "Cannot be blank";
+            } else if (values.password.length < 4) {
+              errors.password = "Password must be more than 4 characters";
             }
             if (!values.password) {
                 errors.password = "Required";
@@ -68,7 +76,7 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
                                 <input 
                                     value={values.email}
                                   onChange={handleChange}
-                                  className={`pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100 ${errors.email && touched.email} error`} type="email" name="email"  id="email"/>
+                                  className={`pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100 ${errors.email && touched.email} error`} name="email"  id="email"/>
                                   {errors.email && touched.email && (
                                     <div className="input-feedback">{errors.email}</div>
                                     )}
