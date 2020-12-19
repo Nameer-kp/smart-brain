@@ -1,14 +1,16 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { Formik } from "formik";
 import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 
-const SignInValidated = ({onRouteChange,loadUser}) => (
+const SignInValidated = ({onRouteChange,loadUser}) => {
 
-    // const ValidatedLoginForm = () => (
-        <Formik
+  const [invalid, setInvalid] = useState(false);
+
+      
+      return  <Formik
           initialValues={{ email: "", password: "" }}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values) => {
         
                 fetch('http://localhost:3001/signin',{
                     method:'post',
@@ -26,6 +28,9 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
                     }
                     else {
                         console.log("wrong crendintials");
+                        setInvalid(true);
+                        
+                        
                     }
                 }).catch(err=>{
                     console.log('error sigin in')
@@ -43,12 +48,13 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
             }
             if (!values.password) {
               errors.password = "Cannot be blank";
-            } else if (values.password.length < 4) {
+            } else if (values.password.length < 2) {
               errors.password = "Password must be more than 4 characters";
             }
             if (!values.password) {
                 errors.password = "Required";
               }
+      
             return errors;
           }}
         >
@@ -67,7 +73,9 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
                 <form
                  onSubmit ={handleSubmit}
                   className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+                    
                 <main className="pa4 black-80">
+                {invalid?<div style={{display:"inline",alignItems:"center"}}>invalid crendintials</div>:false}
                     <div className="measure">
                         <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                             <legend className="f1 fw6 ph0 mh0">Sign In</legend>
@@ -76,7 +84,7 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
                                 <input 
                                     value={values.email}
                                   onChange={handleChange}
-                                  className={`pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100 ${errors.email && touched.email} error`} name="email"  id="email"/>
+                                  className={`pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-90 ${errors.email && touched.email} error`}  name="email"  id="email"/>
                                   {errors.email && touched.email && (
                                     <div className="input-feedback">{errors.email}</div>
                                     )}
@@ -106,12 +114,13 @@ const SignInValidated = ({onRouteChange,loadUser}) => (
                         </div>
                     </div>
                 </main>
+               
                 </form>
             );
           }}
           
         </Formik>
-      );
+};
 
     
 export default SignInValidated;
