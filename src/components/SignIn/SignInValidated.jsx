@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { Formik } from "formik";
+import { useFormik } from "formik";
 import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 
@@ -7,38 +7,35 @@ const SignInValidated = ({onRouteChange,loadUser}) => {
 
   const [invalid, setInvalid] = useState(false);
 
-      
-      return  <Formik
-          initialValues={{ email: "", password: "" }}
-          onSubmit={(values) => {
+  const onSubmit=(values) => {
         
-                fetch('http://localhost:3001/signin',{
-                    method:'post',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({
-                        email:values.email,
-                        password:values.password
-                    })
-                }).then(response=>response.json())
-                .then(user=>{
-                    if(user.id){
-                        console.log("gettingit",user);
-                        loadUser(user);
-                        onRouteChange('home');
-                    }
-                    else {
-                        console.log("wrong crendintials");
-                        setInvalid(true);
-                        
-                        
-                    }
-                }).catch(err=>{
-                    console.log('error sigin in')
-                })
-            }
+    fetch('http://localhost:3001/signin',{
+        method:'post',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            email:values.email,
+            password:values.password
+        })
+    }).then(response=>response.json())
+    .then(user=>{
+        if(user.id){
+            console.log("gettingit",user);
+            loadUser(user);
+            onRouteChange('home');
+        }
+        else {
+            console.log("wrong crendintials");
+            setInvalid(true);
             
-          }
-          validate={values => {
+            
+        }
+    }).catch(err=>{
+        console.log('error sigin in')
+    })
+  }
+
+  
+       const validate=values => {
             let errors = {};
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
             if (!values.email) {
@@ -54,24 +51,22 @@ const SignInValidated = ({onRouteChange,loadUser}) => {
             if (!values.password) {
                 errors.password = "Required";
               }
-      
+
             return errors;
-          }}
-        >
-          {props => {
-            const {
-              values,
-              touched,
-              errors,
-              isSubmitting,
-              handleChange,
-              handleBlur,
-              handleSubmit
-            } = props;
-      
+          }
+
+      const formik = useFormik({
+        initialValues: {
+          password: '',
+          email: '',
+        },
+        validate,
+        onSubmit
+      })
+        
             return (
                 <form
-                 onSubmit ={handleSubmit}
+                 onSubmit ={formik.handleSubmit}
                   className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
                     
                 <main className="pa4 black-80">
@@ -82,25 +77,21 @@ const SignInValidated = ({onRouteChange,loadUser}) => {
                             <div className="mt3">
                                 <label className="db fw6 lh-copy f6" htmlFor="email">Email</label>
                                 <input 
-                                    value={values.email}
-                                  onChange={handleChange}
-                                  className={`pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-90 ${errors.email && touched.email} error`}  name="email"  id="email"/>
-                                  {errors.email && touched.email && (
-                                    <div className="input-feedback">{errors.email}</div>
-                                    )}
+                                    value={formik.values.email}
+                                  onChange={formik.handleChange}
+                                  className={`pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-90`}  name="email"  id="email"/>
+                                   {formik.errors.email ? <div>{formik.errors.email}</div> : null}
                             </div>
                             <div className="mv3">
                                 <label className="db fw6 lh-copy f6 " htmlFor="password">Password</label>
                                 <input 
-                                    value={values.password}
-                                  onChange={handleChange}
-                                  className={`b pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100 ${errors.password && touched.password} error`}
+                                    value={formik.values.password}
+                                  onChange={formik.handleChange}
+                                  className={`b pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100 `}
                                   type="password" name="password"  id="password"
                                   
                             />
-                                {errors.password && touched.password && (
-                                    <div className="input-feedback">{errors.password}</div>
-                                    )}
+                                 {formik.errors.password ? <div>{formik.errors.password}</div> : null}
                             </div>
                         </fieldset>
                         <div className="">
@@ -117,10 +108,10 @@ const SignInValidated = ({onRouteChange,loadUser}) => {
                
                 </form>
             );
-          }}
+     }
           
-        </Formik>
-};
+        
+        
 
     
 export default SignInValidated;

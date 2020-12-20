@@ -10,7 +10,6 @@ import SignInValidated from './components/SignIn/SignInValidated'
 import Register from './components/Register/RegisterValidated'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'
-import { Route, Switch } from 'react-router-dom';
 
 
 const particlesOptions = {
@@ -36,7 +35,7 @@ const initialState={
     input:'',
     imageUrl:'',
     box:{},
-    route:'',
+    route:'signin',
     isSignedIn:false,
     user:{
           id:'',
@@ -165,17 +164,16 @@ class App extends Component {
   }
 
   render(){
-    const { isSignedIn,imageUrl,box } = this.state;
-
+    const { route,isSignedIn,imageUrl,box } = this.state;
     return(
     
     <div className="App">
-      
+
       <Particles params={particlesOptions} className='particles'/>
       {/* we pass isSignIn to Navigation to show it accordingly */}
       <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
       
-      {this.state.user.id?
+      {route==='home'?
       <div>
         <Logo/>
         <Rank name ={this.state.user.name} entries={this.state.user.entries}/>
@@ -183,25 +181,14 @@ class App extends Component {
         <FaceRecognition box ={box} imageUrl={imageUrl}/>
         <ScoreBoard name={this.state.user.name}/>
       </div>
-      :null}
-       
-      <Switch>
+      :(route==='signin'?
+        <SignInValidated onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>
+        :<Register onRouteChange={this.onRouteChange} loadUser={this.loadUser}/>)
         
-        <Route path ="/register"
-            render={(props)=><Register onRouteChange={this.onRouteChange} loadUser={this.loadUser} {...props}/>}
-            />
-
-         <Route path = "/" 
-            render={(props)=><SignInValidated onRouteChange={this.onRouteChange} loadUser={this.loadUser} {...props}/>}
-            />
-
-      </Switch>
-        
-      
+      }
       
     </div>
-    )
-  }
+    )}
   
   
 }

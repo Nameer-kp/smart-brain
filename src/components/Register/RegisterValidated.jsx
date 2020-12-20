@@ -1,10 +1,11 @@
 import React,{useState} from 'react';
 import { useFormik } from "formik";
-
+import {useRouteMatch ,Route} from 'react-router-dom'
 
 
 const Register = ({loadUser,onRouteChange}) => {
-   
+  
+
     const [isTaken,setTaken] = useState(false);
 
     const validate = values => {
@@ -107,6 +108,7 @@ const Register = ({loadUser,onRouteChange}) => {
                 </div>
             </main>
         </form>
+        
     )
     }
 export default Register;
