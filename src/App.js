@@ -36,7 +36,6 @@ const initialState={
     input:'',
     imageUrl:'',
     box:{},
-    route:'',
     isSignedIn:false,
     user:{
           id:'',
@@ -89,7 +88,7 @@ class App extends Component {
 
   displayFaceBox =(box)=>{
     console.log(box);
-    this.setState({box:box});
+    this.setState({...this.state,box:box});
   }
 
   onInputChange=(event)=>{
@@ -115,20 +114,14 @@ class App extends Component {
     console.log('click');
   }
 
-  //this function is used for changing to home page
+  //this function is used to flag signin
 
-  onRouteChange =(route)=>{
+  isSignedIn =(route)=>{
 
     if(route==='home'){
       this.setState({isSignedIn:true})
-    }else if (route==='signout'){
-      this.setState(initialState)
     }
-
-    this.setState({route:route});
-
-
-  }
+    }
 
   callToApi=()=>{
     fetch('http://localhost:3001/apiCall',{
@@ -173,7 +166,7 @@ class App extends Component {
       
       <Particles params={particlesOptions} className='particles'/>
       {/* we pass isSignIn to Navigation to show it accordingly */}
-      <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
+      <Navigation isSignedIn={isSignedIn} />
       
       {this.state.user.id?
       <div>
@@ -186,13 +179,13 @@ class App extends Component {
       :null}
        
       <Switch>
-        
+        // using react router 
         <Route path ="/register"
-            render={(props)=><Register onRouteChange={this.onRouteChange} loadUser={this.loadUser} {...props}/>}
+            render={(props)=><Register onRouteChange={this.isSignedIn} loadUser={this.loadUser} {...props}/>}
             />
 
          <Route path = "/" 
-            render={(props)=><SignInValidated onRouteChange={this.onRouteChange} loadUser={this.loadUser} {...props}/>}
+            render={(props)=><SignInValidated onRouteChange={this.isSignedIn} loadUser={this.loadUser} {...props}/>}
             />
 
       </Switch>

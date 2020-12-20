@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import { useFormik } from "formik";
 import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
+import { Link } from 'react-router-dom';
 
 const SignInValidated = ({onRouteChange,loadUser}) => {
 
@@ -101,7 +102,7 @@ const SignInValidated = ({onRouteChange,loadUser}) => {
                             > Sign In </button>
                         </div>
                         <div className="lh-copy mt3">
-                            <p onClick={()=>onRouteChange('register')} className="f6 link dim black db pointer">Register</p>
+                            <Link to="/register" className="f6 link dim black db pointer">Register</Link>
                         </div>
                     </div>
                 </main>

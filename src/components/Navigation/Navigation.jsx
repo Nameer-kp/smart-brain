@@ -6,7 +6,7 @@ const Navigation =({onRouteChange,isSignedIn})=>{
             return(
             <nav style={{display:"flex" , justifyContent:"flex-end"}}>
             {/* here we create a annoymus arrow function to pass as the call back for onRouteChange('signin') */}
-            <Link to="/" onClick={()=>onRouteChange('signout')} className='f3 link dim black underline pa3 pointer'>Sign Out</Link>
+            <Link to="/" className='f3 link dim black underline pa3 pointer'>Sign Out</Link>
             </nav>
             )
 
