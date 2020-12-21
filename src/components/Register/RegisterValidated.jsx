@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import {useRouteMatch ,Route} from 'react-router-dom'
 
 
-const Register = ({loadUser,isSignedIn}) => {
+const Register = ({loadUser,isSignedIn,history}) => {
   
 
     const [isTaken,setTaken] = useState(false);
@@ -47,6 +47,8 @@ const Register = ({loadUser,isSignedIn}) => {
             if(user.id){
                 loadUser(user)
                 isSignedIn('home');
+                history.push("/home")
+
             }
             else {
                 console.log("already taken");
