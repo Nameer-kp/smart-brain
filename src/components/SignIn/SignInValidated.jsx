@@ -4,7 +4,7 @@ import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 import { Link } from 'react-router-dom';
 
-const SignInValidated = ({onRouteChange,loadUser}) => {
+const SignInValidated = ({isSignedIn,loadUser,history}) => {
 
   const [invalid, setInvalid] = useState(false);
 
@@ -22,7 +22,9 @@ const SignInValidated = ({onRouteChange,loadUser}) => {
         if(user.id){
             console.log("gettingit",user);
             loadUser(user);
-            onRouteChange('home');
+            isSignedIn('home');    
+            history.push("/home")
+
         }
         else {
             console.log("wrong crendintials");
@@ -33,6 +35,7 @@ const SignInValidated = ({onRouteChange,loadUser}) => {
     }).catch(err=>{
         console.log('error sigin in')
     })
+
   }
 
   
@@ -97,7 +100,7 @@ const SignInValidated = ({onRouteChange,loadUser}) => {
                         </fieldset>
                         <div className="">
                             <button
-                            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
+                            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                             type="submit" 
                             > Sign In </button>
                         </div>

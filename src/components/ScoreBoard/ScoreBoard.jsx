@@ -9,6 +9,7 @@ class ScoreBoard extends React.Component{
             scoreboard:[],
         }
     }
+    
 
     componentDidMount(){
         console.log("from scoreboard",this.state.scoreboard);
@@ -20,6 +21,7 @@ class ScoreBoard extends React.Component{
         }).catch(err =>{
             console.log("error getting scoreboard");
         })
+
         
     }
     renderTableData() {

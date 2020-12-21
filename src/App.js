@@ -11,6 +11,8 @@ import Register from './components/Register/RegisterValidated'
 import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'
 import { Route, Switch } from 'react-router-dom';
+import {ProtectedRoute} from './components/Routes/ProtectedRoute'
+import {useLocation} from 'react-router-dom';
 
 
 const particlesOptions = {
@@ -73,6 +75,13 @@ class App extends Component {
     }
 
   }
+
+  componentDidMount(){
+    window.onpopstate = (event)=>{
+      this.setState(initialState)
+    }
+  }
+
   //this calls when we register a new user
   loadUser=(user)=>{
     console.log("logUser Called",user);
@@ -121,6 +130,8 @@ class App extends Component {
     if(route==='home'){
       this.setState({isSignedIn:true})
     }
+    else this.setState(initialState)
+
     }
 
   callToApi=()=>{
@@ -166,26 +177,27 @@ class App extends Component {
       
       <Particles params={particlesOptions} className='particles'/>
       {/* we pass isSignIn to Navigation to show it accordingly */}
-      <Navigation isSignedIn={isSignedIn} />
-      
-      {this.state.user.id?
-      <div>
-        <Logo/>
-        <Rank name ={this.state.user.name} entries={this.state.user.entries}/>
+      <Navigation isSignedIn={isSignedIn} signOut={this.isSignedIn}/>
+       <Switch>
+      <ProtectedRoute path ="/home" 
+      render={()=> <div> <Logo/> {/*Here passing render Props to Protectedroute check aunthenticate with isSignedIn */}
+        <Rank name ={this.state.user.name} entries={this.state.user.entries} />
         <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
         <FaceRecognition box ={box} imageUrl={imageUrl}/>
-        <ScoreBoard name={this.state.user.name}/>
-      </div>
-      :null}
-       
-      <Switch>
-        // using react router 
+        <ScoreBoard name={this.state.user.name} /> 
+          </div>
+        } isSignedIn={this.state.isSignedIn}/>
+
+
+      { /* using react router */} 
         <Route path ="/register"
-            render={(props)=><Register onRouteChange={this.isSignedIn} loadUser={this.loadUser} {...props}/>}
+            render={(props)=><Register isSignedIn={this.isSignedIn} loadUser={this.loadUser} {...props}/>}
             />
 
          <Route path = "/" 
-            render={(props)=><SignInValidated onRouteChange={this.isSignedIn} loadUser={this.loadUser} {...props}/>}
+            render={(props)=>{
+              
+              return<SignInValidated isSignedIn={this.isSignedIn} loadUser={this.loadUser} {...props}/>}}
             />
 
       </Switch>
