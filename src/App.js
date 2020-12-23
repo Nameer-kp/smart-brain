@@ -186,7 +186,9 @@ class App extends Component {
         <FaceRecognition box ={box} imageUrl={imageUrl}/>
         <ScoreBoard name={this.state.user.name} /> 
           </div>
-        } isSignedIn={this.state.isSignedIn}/>
+        } isSignedIn={this.state.isSignedIn}
+        loadUser={this.loadUser}
+         signIn={this.isSignedIn}/>
 
 
       { /* using react router */} 
