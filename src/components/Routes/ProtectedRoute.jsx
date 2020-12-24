@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
-import {Redirect, Route} from 'react-router-dom'
+import {Redirect, Route} from 'react-router-dom';
+
 
 export const ProtectedRoute =({render,isSignedIn,loadUser,signIn,...rest}) =>{
+    
     if(!isSignedIn){
         fetch('http://localhost:3001/home',{
-            method:'get',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({
-                //send the stored token to the server
-            })
-        }).then(response=>response.json())
+            credentials:'same-origin',
+            method:'GET',
+            credentials: 'include',
+            headers:{'Content-Type':'application/json',
+            },
+             }).then(response=>response.json())
         .then(user=>{
             if(user.id){
                 console.log("gettingit",user);
