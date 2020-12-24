@@ -129,6 +129,12 @@ class App extends Component {
 
     if(route==='home'){
       this.setState({isSignedIn:true})
+    //   fetch('http://localhost:3001/token',{
+    //             method: 'GET',
+    //             credentials: 'include'
+    //             }).then(data=>{
+    //                 console.log("from signin cookie",data);
+    //             });
     }
     else this.setState(initialState)
 

@@ -3,12 +3,11 @@ import {Redirect, Route} from 'react-router-dom'
 
 export const ProtectedRoute =({render,isSignedIn,loadUser,signIn,...rest}) =>{
     if(!isSignedIn){
-        fetch('http://localhost:3001/home',{
+        fetch('/home',{
             method:'get',
+            credentials:'include',
             headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({
-                //send the stored token to the server
-            })
+            
         }).then(response=>response.json())
         .then(user=>{
             if(user.id){
@@ -32,16 +31,16 @@ export const ProtectedRoute =({render,isSignedIn,loadUser,signIn,...rest}) =>{
                 return render(props)
             }
 
-            else {
-              return <Redirect to={
-                  {
-                    pathname:"/",
-                    state:{
-                        from:props.location
-                    }
-                }
-            }/>
-            }
+            // else {
+            //   return <Redirect to={
+            //       {
+            //         pathname:"/",
+            //         state:{
+            //             from:props.location
+            //         }
+            //     }
+            // }/>
+            // }
             
 
         }

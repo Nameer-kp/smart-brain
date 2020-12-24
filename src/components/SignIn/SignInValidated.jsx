@@ -12,6 +12,7 @@ const SignInValidated = ({isSignedIn,loadUser,history}) => {
         
     fetch('http://localhost:3001/signin',{
         method:'post',
+        credentials:'include',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({
             email:values.email,
