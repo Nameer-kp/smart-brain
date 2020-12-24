@@ -73,16 +73,26 @@ class App extends Component {
       rightCol: width -(clarifaiFace.right_col*width),
       bottomRow: height-(clarifaiFace.bottom_row*height)
 
+      
+    }
+    
+  }
+  //this function is used to flag signin
+
+  isSignedIn =(route)=>{
+
+    if(route==='home'){
+      this.setState({isSignedIn:true})
+    //   fetch('http://localhost:3001/token',{
+    //             method: 'GET',
+    //             credentials: 'include'
+    //             }).then(data=>{
+    //                 console.log("from signin cookie",data);
+    //             });
+    }
+    else this.setState(initialState)
 
     }
-
-  }
-
-  componentDidMount(){
-    window.onpopstate = (event)=>{
-      this.setState(initialState)
-    }
-  }
 
   //this calls when we register a new user
   loadUser=(user)=>{
@@ -97,6 +107,27 @@ class App extends Component {
       console.log(this.state);
   }
 
+
+  async componentDidMount(){
+    window.onpopstate = (event)=>{
+      this.setState(initialState)
+    }
+    const response = await fetch('http://localhost:3001/home',{
+      method:'get',
+      credentials:'include',
+      headers:{'Content-Type':'application/json'},
+      
+    })
+
+  const user = await response.json()
+      if(user.id){
+          console.log("gettingit",user);
+          this.loadUser(user);
+          this.isSignedIn('home');
+          }
+    
+  }
+  
   displayFaceBox =(box)=>{
     console.log(box);
     this.setState({...this.state,box:box});
@@ -125,25 +156,9 @@ class App extends Component {
     console.log('click');
   }
 
-  //this function is used to flag signin
-
-  isSignedIn =(route)=>{
-
-    if(route==='home'){
-      this.setState({isSignedIn:true})
-    //   fetch('http://localhost:3001/token',{
-    //             method: 'GET',
-    //             credentials: 'include'
-    //             }).then(data=>{
-    //                 console.log("from signin cookie",data);
-    //             });
-    }
-    else this.setState(initialState)
-
-    }
 
   callToApi=()=>{
-    fetch('http://localhost:3001/apiCall',{
+    fetch('/apiCall',{
           method:'put',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({
@@ -153,7 +168,7 @@ class App extends Component {
     .then(response => {
     // updating entries via put on /image
     if(response){
-        fetch('http://localhost:3001/image',{
+        fetch('/image',{
           method:'put',
           headers:{'Content-Type':'application/json'},
           body:JSON.stringify({

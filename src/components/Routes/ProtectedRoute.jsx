@@ -1,29 +1,11 @@
-import React, { Component } from 'react'
+import React, { useState,useEffect } from 'react';
 import {Redirect, Route} from 'react-router-dom';
 
 
 export const ProtectedRoute =({render,isSignedIn,loadUser,signIn,...rest}) =>{
     
-    if(!isSignedIn){
-
-        fetch('/home',{
-            method:'get',
-            credentials:'include',
-            headers:{'Content-Type':'application/json'},
-            
-        }).then(response=>response.json())
-
-        .then(user=>{
-            if(user.id){
-                console.log("gettingit",user);
-                loadUser(user);
-                signIn('home');
-                }
-            
-        }).catch(err=>{
-            console.log('error sigin in')
-        })
-    }
+        
+    
    
         
         return(
@@ -35,16 +17,16 @@ export const ProtectedRoute =({render,isSignedIn,loadUser,signIn,...rest}) =>{
                 return render(props)
             }
 
-            // else {
-            //   return <Redirect to={
-            //       {
-            //         pathname:"/",
-            //         state:{
-            //             from:props.location
-            //         }
-            //     }
-            // }/>
-            // }
+            else {
+              return <Redirect to={
+                  {
+                    pathname:"/",
+                    state:{
+                        from:props.location
+                    }
+                }
+            }/>
+            }
             
 
         }
