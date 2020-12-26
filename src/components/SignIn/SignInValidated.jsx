@@ -106,9 +106,11 @@ const SignInValidated = ({signIn,loadUser,history,isSignedIn}) => {
                                   type="password" name="password"  id="password"
                                   
                             />
-                                 {formik.errors.password ? <div>{formik.errors.password}</div> : null}
-                            </div>
-                        </fieldset>
+                                 {formik.errors.password ? <div style={{width:'12rem'}} className='center'>{formik.errors.password}</div> : null}
+                            </div> 
+                            </fieldset>
+
+                       
                         <div className="">
                             <button
                             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"

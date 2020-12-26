@@ -107,7 +107,7 @@ const Register = ({loadUser,isSignedIn,history,signIn}) => {
                             className="b pa2 input-reset ba b--black  bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  id="password"/>
                                   
 
-                        </div> {formik.errors.password ? <p>{formik.errors.password}</p> : null}
+                        </div> {formik.errors.password ? <p style={{width:'12rem'}} className='center'>{formik.errors.password}</p> : null}
                     </fieldset>
                     <div className="">
                         <button
