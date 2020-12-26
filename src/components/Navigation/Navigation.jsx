@@ -3,8 +3,14 @@ import {Link,Rout} from 'react-router-dom'
 
 const Navigation =({isSignedIn,signOut})=>{
 
-        const onSignOut = () =>{
-            signOut('signout')
+        const onSignOut =  async () =>{
+           const result = await fetch("http://localhost:3001/logout",{
+                method:'get',
+                credentials:'include'
+                
+            })
+            if(result)
+            {signOut('signout')}
         } 
         if (isSignedIn){
             return(
