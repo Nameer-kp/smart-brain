@@ -3,6 +3,7 @@ import {Link,Rout} from 'react-router-dom'
 
 const Navigation =({isSignedIn,signOut})=>{
 
+    // for removing the jwt token from the browser
         const onSignOut =  async () =>{
            const result = await fetch("http://localhost:3001/logout",{
                 method:'get',
@@ -21,6 +22,9 @@ const Navigation =({isSignedIn,signOut})=>{
             )
 
         
+        }
+        else if(isSignedIn===null) {
+            return <div></div>
         }
         else {
             return(

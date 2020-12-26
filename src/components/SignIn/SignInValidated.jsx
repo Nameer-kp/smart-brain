@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const SignInValidated = ({signIn,loadUser,history,isSignedIn}) => {
 
   const [invalid, setInvalid] = useState(false);
-
+  //if the user has jwt in cookies then this will be true
   if(isSignedIn){
     history.push("/home")
   }
@@ -72,8 +72,14 @@ const SignInValidated = ({signIn,loadUser,history,isSignedIn}) => {
         validate,
         onSubmit
       })
+        if (isSignedIn===null){ //shows loading while jwt checking
+          return <h1>Loading</h1>
+        }
+        else{
+
         
             return (
+            
                 <form
                  onSubmit ={formik.handleSubmit}
                   className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -117,6 +123,7 @@ const SignInValidated = ({signIn,loadUser,history,isSignedIn}) => {
                
                 </form>
             );
+            }
      }
           
         

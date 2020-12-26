@@ -1,40 +1,38 @@
 import React from 'react';
 import  './ScoreBoard.css';
+import {useState,useEffect} from 'react'
 
-class ScoreBoard extends React.Component{
+const ScoreBoard =(props)=>{
     
-    constructor(props){ //through here we get the current loged in user data
-        super(props);
-        this.state={
-            scoreboard:[],
-        }
-    }
+    //using hooks
+    const [scoreBoard,setScoreBoard] =useState([]);
+    
+   
+    const fetchData=()=>{
     
 
-    componentDidMount(){
-        console.log("from scoreboard",this.state.scoreboard);
+    fetch('http://localhost:3001/',{
+        credentials:'include',
+        method:'get'
+    }).then(async response=>{ //need the pass the jwt token
 
-        fetch('http://localhost:3001/',{
-            credentials:'include',
-            method:'get'
-        }).then(async response=>{ //need the pass the jwt token
-
-            let users =  await response.json()
-            this.setState({scoreboard:users})
-            console.log("from scoreboard",this.state.scoreboard);
-            
-        }).catch(err =>{
-            console.log("error getting scoreboard");
-        })
-
+        let users =  await response.json()
+        setScoreBoard(users)
         
-    }
-    renderTableData() {
+    }).catch(err =>{
+        console.log("error getting scoreboard");
+    })
+}
+    useEffect(()=>{
+        
+        fetchData()
+
+    },[props.entries])
+    const renderTableData=()=> {
         let isTop10;
-     
-        return this.state.scoreboard.map((user, index) => {
+        return scoreBoard.map((user, index) => {
            const { name,entries } = user //destructuring
-           if(name===this.props.name){          //this code check whether the current user is in top10 or not
+           if(name===props.name){          //this code check whether the current user is in top10 or not
                isTop10=true;
            }
            else isTop10=false;
@@ -48,10 +46,13 @@ class ScoreBoard extends React.Component{
         })
      }
 
-    render(){
-        return (
+    
 
+        
+        return (
+            
             <div>
+              
                 <h1>Score Board</h1>
             
             <div className="tcontainer">
@@ -65,7 +66,7 @@ class ScoreBoard extends React.Component{
                     
                 </thead>
                 <tbody>
-                    {this.renderTableData()}
+                    {renderTableData()}
                 </tbody>
 
             </table>
@@ -73,7 +74,7 @@ class ScoreBoard extends React.Component{
         </div>
         )
     }
-}
+
 
 export default ScoreBoard;
 

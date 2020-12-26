@@ -11,7 +11,7 @@ export const Home = (props) => {
             <Rank name ={props.name} entries={props.entries} />
             <ImageLinkForm onInputChange={props.onInputChange} onButtonSubmit={props.onButtonSubmit}/> 
             <FaceRecognition box ={props.box} imageUrl={props.imageUrl}/>
-            <ScoreBoard name={props.name} /> 
+            <ScoreBoard name={props.name} entries={props.entries} /> 
         </div>
           )
 }

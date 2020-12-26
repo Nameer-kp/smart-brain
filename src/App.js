@@ -1,18 +1,12 @@
 
 import React,{Component} from 'react';
 import Navigation from './components/Navigation/Navigation';
-import Logo from './components/Logo/Logo';
-import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
-import Rank from './components/Rank/Rank';
 import Particles from 'react-particles-js';
 import './App.css';
 import SignInValidated from './components/SignIn/SignInValidated'
 import Register from './components/Register/RegisterValidated'
-import FaceRecognition from './components/FaceRecognition/FaceRecognition'
-import ScoreBoard from './components/ScoreBoard/ScoreBoard'
 import { Route, Switch } from 'react-router-dom';
 import {ProtectedRoute} from './components/Routes/ProtectedRoute'
-import { Home } from './components/home/Home';
 
 
 
@@ -40,7 +34,7 @@ const initialState={
     input:'',
     imageUrl:'',
     box:{},
-    isSignedIn:false,
+    isSignedIn:null,
     user:{
           id:'',
           name:'',
@@ -83,16 +77,15 @@ class App extends Component {
 
     if(route==='home'){
       this.setState({isSignedIn:true})
-    //   fetch('http://localhost:3001/token',{
-    //             method: 'GET',
-    //             credentials: 'include'
-    //             }).then(data=>{
-    //                 console.log("from signin cookie",data);
-    //             });
+   
     }
-    else this.setState(initialState)
+
+    else {
+      this.setState({...initialState,isSignedIn:false})
+      console.log("getting isSignedin ",this.state);
 
     }
+  }
 
   //this calls when we register a new user
   loadUser=(user)=>{
@@ -108,10 +101,11 @@ class App extends Component {
   }
 
 
-  async componentDidMount(){
+  async componentDidMount(){ // checking we have correct jwt 
     window.onpopstate = (event)=>{
-      this.setState(initialState)
+      this.setState({...initialState,isSignedIn:false})
     }
+    try{
     const response = await fetch('http://localhost:3001/home',{
       method:'get',
       credentials:'include',
@@ -119,12 +113,17 @@ class App extends Component {
       
     })
 
-  const user = await response.json()
+  const user = await response.json()    //if yes server sends the user object
       if(user.id){
           console.log("gettingit",user);
           this.loadUser(user);
           this.isSignedIn('home');
           }
+        }
+        catch (err){
+          this.isSignedIn('signout')
+        }
+        
     
   }
   
@@ -218,7 +217,7 @@ class App extends Component {
 
       { /* using react router */} 
         <Route path ="/register"
-            render={(props)=><Register isSignedIn={this.isSignedIn} loadUser={this.loadUser} signIn={this.isSignedIn} {...props}/>}
+            render={(props)=><Register isSignedIn={this.state.isSignedIn} loadUser={this.loadUser} signIn={this.isSignedIn} {...props}/>}
             />
 
          <Route path = "/" 

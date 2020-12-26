@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import { useFormik } from "formik";
-import {useRouteMatch ,Route} from 'react-router-dom'
 
 
 const Register = ({loadUser,isSignedIn,history,signIn}) => {
@@ -11,6 +10,7 @@ const Register = ({loadUser,isSignedIn,history,signIn}) => {
     if(isSignedIn){
       history.push("/home")
     }
+    
 
     const validate = values => {
         const errors = {};
@@ -50,7 +50,7 @@ const Register = ({loadUser,isSignedIn,history,signIn}) => {
         .then(user=>{
             if(user.id){
                 loadUser(user)
-                SignIn('home');
+                signIn('home');
                 history.push("/home")
 
             }
@@ -70,9 +70,13 @@ const Register = ({loadUser,isSignedIn,history,signIn}) => {
         validate,
         onSubmit: onSubmitRegister
       });
-
+      if (!isSignedIn===null){ //shows loading while jwt checking
+        return <h1>Loading</h1>
+      }
+      else{
     
     return(
+        
         <form onSubmit={formik.handleSubmit} className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
             <main className="pa4 black-80">
             {isTaken?<div style={{display:"inline",alignItems:"center"}}>Email already Taken</div>:false}
@@ -116,5 +120,6 @@ const Register = ({loadUser,isSignedIn,history,signIn}) => {
         </form>
         
     )
+      }
     }
 export default Register;
