@@ -12,7 +12,7 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition'
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'
 import { Route, Switch } from 'react-router-dom';
 import {ProtectedRoute} from './components/Routes/ProtectedRoute'
-import {useLocation} from 'react-router-dom';
+import { Home } from './components/home/Home';
 
 
 
@@ -199,30 +199,32 @@ class App extends Component {
     <div className="App">
       
       <Particles params={particlesOptions} className='particles'/>
+      
       {/* we pass isSignIn to Navigation to show it accordingly */}
       <Navigation isSignedIn={isSignedIn} signOut={this.isSignedIn}/>
+      
        <Switch>
+      
       <ProtectedRoute path ="/home" 
-      render={()=> <div> <Logo/> {/*Here passing render Props to Protectedroute check aunthenticate with isSignedIn */}
-        <Rank name ={this.state.user.name} entries={this.state.user.entries} />
-        <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/> 
-        <FaceRecognition box ={box} imageUrl={imageUrl}/>
-        <ScoreBoard name={this.state.user.name} /> 
-          </div>
-        } isSignedIn={this.state.isSignedIn}
-        loadUser={this.loadUser}
-         signIn={this.isSignedIn}/>
+      name ={this.state.user.name} 
+      entries={this.state.user.entries}
+      onInputChange={this.onInputChange} 
+      onButtonSubmit={this.onButtonSubmit}
+      box ={box} imageUrl={imageUrl}
+      isSignedIn={this.state.isSignedIn}
+      loadUser={this.loadUser}
+      signIn={this.isSignedIn}/>
 
 
       { /* using react router */} 
         <Route path ="/register"
-            render={(props)=><Register isSignedIn={this.isSignedIn} loadUser={this.loadUser} {...props}/>}
+            render={(props)=><Register isSignedIn={this.isSignedIn} loadUser={this.loadUser} signIn={this.isSignedIn} {...props}/>}
             />
 
          <Route path = "/" 
             render={(props)=>{
               
-              return<SignInValidated isSignedIn={this.isSignedIn} loadUser={this.loadUser} {...props}/>}}
+              return<SignInValidated signIn={this.isSignedIn} loadUser={this.loadUser} isSignedIn={this.state.isSignedIn}{...props}/>}}
             />
 
       </Switch>

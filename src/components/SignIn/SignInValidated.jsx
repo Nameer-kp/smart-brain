@@ -4,9 +4,13 @@ import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 import { Link } from 'react-router-dom';
 
-const SignInValidated = ({isSignedIn,loadUser,history}) => {
+const SignInValidated = ({signIn,loadUser,history,isSignedIn}) => {
 
   const [invalid, setInvalid] = useState(false);
+
+  if(isSignedIn){
+    history.push("/home")
+  }
 
   const onSubmit=(values) => {
         
@@ -23,7 +27,7 @@ const SignInValidated = ({isSignedIn,loadUser,history}) => {
         if(user.id){
             console.log("gettingit",user);
             loadUser(user);
-            isSignedIn('home');    
+            signIn('home');    
             history.push("/home")
 
         }

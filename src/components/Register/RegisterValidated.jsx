@@ -3,10 +3,14 @@ import { useFormik } from "formik";
 import {useRouteMatch ,Route} from 'react-router-dom'
 
 
-const Register = ({loadUser,isSignedIn,history}) => {
+const Register = ({loadUser,isSignedIn,history,signIn}) => {
   
 
     const [isTaken,setTaken] = useState(false);
+    // redirecting user if he already have the valid jwt token
+    if(isSignedIn){
+      history.push("/home")
+    }
 
     const validate = values => {
         const errors = {};
@@ -46,7 +50,7 @@ const Register = ({loadUser,isSignedIn,history}) => {
         .then(user=>{
             if(user.id){
                 loadUser(user)
-                isSignedIn('home');
+                SignIn('home');
                 history.push("/home")
 
             }

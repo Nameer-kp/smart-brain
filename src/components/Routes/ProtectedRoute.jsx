@@ -1,8 +1,9 @@
 import React, { useState,useEffect } from 'react';
 import {Redirect, Route} from 'react-router-dom';
+import { Home } from '../home/Home';
 
 
-export const ProtectedRoute =({render,isSignedIn,loadUser,signIn,...rest}) =>{
+export const ProtectedRoute =({isSignedIn,...rest}) =>{
     
         
     
@@ -14,7 +15,7 @@ export const ProtectedRoute =({render,isSignedIn,loadUser,signIn,...rest}) =>{
         //     
 
             if(isSignedIn){
-                return render(props)
+                return <Home {...rest} {...props}/>
             }
 
             else {

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link,Rout} from 'react-router-dom'
 
-const Navigation =({onRouteChange,isSignedIn,signOut})=>{
+const Navigation =({isSignedIn,signOut})=>{
 
         const onSignOut = () =>{
             signOut('signout')
