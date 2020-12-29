@@ -8,10 +8,10 @@ export const Home = (props) => {
  
     return(
         <div> <Logo/> {/*Here passing render Props to Protectedroute check aunthenticate with isSignedIn */}
-            <Rank name ={props.name} entries={props.entries} />
-            <ImageLinkForm onInputChange={props.onInputChange} onButtonSubmit={props.onButtonSubmit}/> 
-            <FaceRecognition box ={props.box} imageUrl={props.imageUrl}/>
-            <ScoreBoard name={props.name} entries={props.entries} /> 
+            <Rank />
+            <ImageLinkForm /> 
+            <FaceRecognition />
+            <ScoreBoard /> 
         </div>
           )
 }

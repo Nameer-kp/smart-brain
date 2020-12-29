@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { SignInContext } from '../../App';
 import  './FaceRecognition.css'
 
-const FaceRecognition =({imageUrl,box}) =>{
+const FaceRecognition =() =>{
+    const {imageUrl,box}=useContext(SignInContext)
 
     return(
         <div className='ma center box'>

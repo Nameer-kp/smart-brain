@@ -1,12 +1,14 @@
-import React from 'react';
+import React,{useContext} from 'react';
+import { SignInContext } from '../../App';
 
-const Rank =({entries,name})=>{
+const Rank =()=>{
+    const {entries,username}=useContext(SignInContext)
     return(
 
         <div>
 
             <div className='white f3' style={{marginTop:4}}>
-                {`${name} , your current rank is...`}
+                {`${username} , your current rank is...`}
             </div>
             <div className='white f1'>
                 {`${entries}`}

@@ -1,9 +1,11 @@
-import React from 'react';
+import {React,useContext} from 'react';
 import {Link,Rout} from 'react-router-dom'
+import {SignInContext} from './../../App'
 
-const Navigation =({isSignedIn,signOut})=>{
+const Navigation =({signOut})=>{
 
     // for removing the jwt token from the browser
+        const {isSignedIn} = useContext(SignInContext)
         const onSignOut =  async () =>{
            const result = await fetch("http://localhost:3001/logout",{
                 method:'get',

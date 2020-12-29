@@ -1,9 +1,10 @@
 import React from 'react';
 import  './ScoreBoard.css';
-import {useState,useEffect} from 'react'
+import {useState,useEffect,useContext} from 'react'
+import { SignInContext } from '../../App';
 
-const ScoreBoard =(props)=>{
-    
+const ScoreBoard =()=>{
+    const {entries,username} =useContext(SignInContext)
     //using hooks
     const [scoreBoard,setScoreBoard] =useState([]);
     
@@ -27,12 +28,12 @@ const ScoreBoard =(props)=>{
         
         fetchData()
 
-    },[props.entries])
+    },[entries])
     const renderTableData=()=> {
         let isTop10;
         return scoreBoard.map((user, index) => {
            const { name,entries } = user //destructuring
-           if(name===props.name){          //this code check whether the current user is in top10 or not
+           if(name===username){          //this code check whether the current user is in top10 or not
                isTop10=true;
            }
            else isTop10=false;

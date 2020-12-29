@@ -43,6 +43,8 @@ const initialState={
           joined : ''
     }
 }
+export const SignInContext = React.createContext(null);
+
 
 class App extends Component {
 
@@ -196,23 +198,25 @@ class App extends Component {
     return(
     
     <div className="App">
-      
-      <Particles params={particlesOptions} className='particles'/>
+      <SignInContext.Provider value={{isSignedIn:isSignedIn,
+      username:this.state.user.name,
+      entries:this.state.user.entries,
+      onInputChange:this.onInputChange,
+      onButtonSubmit:this.onButtonSubmit,
+      box:box,
+      imageUrl:imageUrl,
+      loadUser:this.loadUser,
+      signIn:this.isSignedIn,
+      }}>
+
+        <Particles params={particlesOptions} className='particles'/>
       
       {/* we pass isSignIn to Navigation to show it accordingly */}
-      <Navigation isSignedIn={isSignedIn} signOut={this.isSignedIn}/>
+      <Navigation signOut={this.isSignedIn}/>
       
        <Switch>
       
-      <ProtectedRoute path ="/home" 
-      name ={this.state.user.name} 
-      entries={this.state.user.entries}
-      onInputChange={this.onInputChange} 
-      onButtonSubmit={this.onButtonSubmit}
-      box ={box} imageUrl={imageUrl}
-      isSignedIn={this.state.isSignedIn}
-      loadUser={this.loadUser}
-      signIn={this.isSignedIn}/>
+      <ProtectedRoute path ="/home"/>
 
 
       { /* using react router */} 
@@ -227,6 +231,8 @@ class App extends Component {
             />
 
       </Switch>
+      </SignInContext.Provider>
+      
         
       
       

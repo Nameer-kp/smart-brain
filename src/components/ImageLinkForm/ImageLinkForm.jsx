@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { SignInContext } from '../../App';
 import './ImageLinkForm.css'
 
-const ImageLinkForm = ({onInputChange,onButtonSubmit})=>{
+const ImageLinkForm = ()=>{
+    const {onButtonSubmit,onInputChange}=useContext(SignInContext)
     return(
         <div>
             

@@ -1,10 +1,14 @@
-import React, { useState,useEffect } from 'react';
+import React, { useContext } from 'react';
 import {Redirect, Route} from 'react-router-dom';
+import { SignInContext } from '../../App';
 import { Home } from '../home/Home';
 
 
-export const ProtectedRoute =({isSignedIn,...rest}) =>{
+
+export const ProtectedRoute =({...rest}) =>{
     
+
+    const {isSignedIn}=useContext(SignInContext)
         
     
    
