@@ -149,11 +149,6 @@ class App extends Component {
     console.log("1onButtonSubmit",this.state.imageUrl);
     }
     
-
-
-
-    
-      
     console.log('click');
   }
 
