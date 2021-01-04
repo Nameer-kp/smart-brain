@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "../../../../smart-brain-api"
+			"path": "../../.."
 		},
 		{
-			"path": "../../.."
+			"path": "../../../../smart-brain-api"
 		}
 	],
 	"settings": {}

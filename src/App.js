@@ -6,7 +6,9 @@ import './App.css';
 import SignInValidated from './components/SignIn/SignInValidated'
 import Register from './components/Register/RegisterValidated'
 import { Route, Switch } from 'react-router-dom';
-import {ProtectedRoute} from './components/Routes/ProtectedRoute'
+import {ProtectedRoute} from './components/Routes/ProtectedRoute';
+var isEmpty = require('lodash.isempty');
+
 
 
 
@@ -35,6 +37,7 @@ const initialState={
     imageUrl:'',
     box:{},
     isSignedIn:null,
+    isFace:true,
     user:{
           id:'',
           name:'',
@@ -163,7 +166,7 @@ class App extends Component {
           }).then(response=>response.json())
     .then(response => {
     // updating entries via put on /image
-    if(response){
+    if(!isEmpty(response.outputs[0].data)){
         fetch('/image',{
           method:'put',
           headers:{'Content-Type':'application/json'},
@@ -174,12 +177,18 @@ class App extends Component {
       
       this.setState(Object.assign(this.state.user,{entries:parseInt(entries)}))
     })
-  }
-
 
     //here the processed response is passed to displayFaceBox
     this.displayFaceBox(this.calculateFaceLocation(response));
     // There was a successful response
+    console.log("getting from callToapi",response);
+  }
+  else{
+      console.log("getting from callToapi else");
+      this.setState(Object.assign(this.state,{imageUrl:'',box:{},isFace:false}))
+  }
+
+
   })
   .catch(error => {
     console.log(error);
@@ -202,6 +211,7 @@ class App extends Component {
       imageUrl:imageUrl,
       loadUser:this.loadUser,
       signIn:this.isSignedIn,
+      isFace:this.state.isFace,
       }}>
 
         <Particles params={particlesOptions} className='particles'/>

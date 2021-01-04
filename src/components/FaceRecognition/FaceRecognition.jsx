@@ -3,7 +3,7 @@ import { SignInContext } from '../../App';
 import  './FaceRecognition.css'
 
 const FaceRecognition =() =>{
-    const {imageUrl,box}=useContext(SignInContext)
+    const {imageUrl,box,isFace}=useContext(SignInContext)
 
     return(
         <div className='ma center box'>
@@ -15,6 +15,7 @@ const FaceRecognition =() =>{
                         <div className='bounding-box' style={{top:box.topRow,right:box.rightCol,bottom:box.bottomRow,left:box.leftCol}}>
 
                         </div>
+                        {!isFace&&(imageUrl==='')?<h1>No Face Detected</h1>:null}
                     </div>
                    
             </div>

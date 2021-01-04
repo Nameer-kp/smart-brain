@@ -11,6 +11,7 @@
     "clarifai": "^2.9.1",
     "email-validator": "^2.0.4",
     "formik": "^2.2.6",
+    "lodash.isempty": "^4.4.0",
     "react": "^17.0.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^17.0.1",
@@ -47,5 +48,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy":"http://localhost:3001"
+  "proxy": "http://localhost:3001"
 }
