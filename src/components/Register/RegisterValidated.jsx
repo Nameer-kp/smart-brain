@@ -40,6 +40,7 @@ const Register = ({loadUser,isSignedIn,history,signIn}) => {
         
         fetch('http://localhost:3001/register',{
             method:'post',
+            credentials:'include',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
                 email:values.email,

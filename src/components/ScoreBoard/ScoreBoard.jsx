@@ -15,7 +15,7 @@ const ScoreBoard =()=>{
     fetch('http://localhost:3001/',{
         credentials:'include',
         method:'get'
-    }).then(async response=>{ //need the pass the jwt token
+    }).then(async response=>{ //need to pass the jwt token
 
         let users =  await response.json()
         setScoreBoard(users)
